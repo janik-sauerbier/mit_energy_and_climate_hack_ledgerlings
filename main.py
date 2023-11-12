@@ -173,22 +173,22 @@ with col2b:
     st.session_state.full_response = ""
 
     for response in client.chat.completions.create(model=st.session_state["openai_model"],
-                                                   messages=[{"role": "system", "content": "You're an policy expert that works for " + select + ". Your job is to paint a vivid picture of what will happen in a given scenario that you're given to inform policy makers, but in a concise way as you're aware that policy makers are busy. Describe how " + select + "will be affected by a bad 3-degree global warming scenario in a short sentence. Be concise, and use max 3 bullet points to describe your ideas. Highlight the important things in bold. Be specific when you can on the consequences to the economy. Conclude with one specific sentence about how it's still better than a 3-degree scenario."}],
+                                                   messages=[{"role": "system", "content": "You're an policy expert that works for " + str(select) + ". Your job is to paint a vivid picture of what will happen in a given scenario that you're given to inform policy makers, but in a concise way as you're aware that policy makers are busy. Describe how " + str(select) + "will be affected by a bad 3-degree global warming scenario in a short sentence. Be concise, and use max 3 bullet points to describe your ideas. Highlight the important things in bold. Be specific when you can on the consequences to the economy. Conclude with one specific sentence about how it's still better than a 3-degree scenario."}],
                                                    stream=True):
         st.session_state.full_response += response.choices[0].delta.content or ""
         message_placeholder.markdown(st.session_state.full_response + "▌")
 
     message_placeholder.markdown(st.session_state.full_response)
 
-#    image1 = client.images.generate(
-#        model="dall-e-3",
-#        prompt="Create a photorealistic scene of a someone in a profession in" + select + "and how they would be affected by a 2-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
-#        size="1024x1024",
-#        quality="standard",
-#        n=1,
-#    )
+    image1 = client.images.generate(
+        model="dall-e-3",
+        prompt="Create a photorealistic scene of a someone in a profession in" + str(select) + "and how they would be affected by a 2-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
+        size="1024x1024",
+        quality="standard",
+        n=1,
+    )
 
-#    st.image(image1.data[0].url)
+    st.image(image1.data[0].url)
 
 with col3b:
     st.write("### 🔴 3-degree scenario")
@@ -196,22 +196,22 @@ with col3b:
     st.session_state.full_response2 = ""
 
     for response in client.chat.completions.create(model=st.session_state["openai_model"],
-                                                   messages=[{"role": "system", "content": "You're an policy expert that works for " + select + ". Your job is to paint a vivid picture of what will happen in a given scenario that you're given to inform policy makers, but in a concise way as you're aware that policy makers are busy. Describe how " + select + "will be affected by a bad 3-degree global warming scenario in a short sentence. Be concise, and use max 3 bullet points to describe your ideas. Highlight the important things in bold. Be specific when you can on the consequences to the economy. Conclude with one specific sentence about how it's worse than a 2-degree scenario, but better than a 4-degree scenario."}],
+                                                   messages=[{"role": "system", "content": "You're an policy expert that works for " + str(select) + ". Your job is to paint a vivid picture of what will happen in a given scenario that you're given to inform policy makers, but in a concise way as you're aware that policy makers are busy. Describe how " + str(select) + "will be affected by a bad 3-degree global warming scenario in a short sentence. Be concise, and use max 3 bullet points to describe your ideas. Highlight the important things in bold. Be specific when you can on the consequences to the economy. Conclude with one specific sentence about how it's worse than a 2-degree scenario, but better than a 4-degree scenario."}],
                                                    stream=True):
         st.session_state.full_response2 += response.choices[0].delta.content or ""
         message_placeholder2.markdown(st.session_state.full_response2 + "▌")
 
     message_placeholder2.markdown(st.session_state.full_response2)
 
-#    image2 = client.images.generate(
-#        model="dall-e-3",
-#        prompt="Create a photorealistic scene of a someone in a profession in" + select + "and how they would be affected by a bad 3-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
-#        size="1024x1024",
-#        quality="standard",
-#        n=1,
-#    )
+    image2 = client.images.generate(
+        model="dall-e-3",
+        prompt="Create a photorealistic scene of a someone in a profession in" + str(select) + "and how they would be affected by a bad 3-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
+        size="1024x1024",
+        quality="standard",
+        n=1,
+    )
 
-#    st.image(image2.data[0].url)
+    st.image(image2.data[0].url)
 
 with col4b:
     st.write("### 🟣 4-degree scenario")
@@ -219,20 +219,20 @@ with col4b:
     st.session_state.full_response3 = ""
 
     for response in client.chat.completions.create(model=st.session_state["openai_model"],
-                                                   messages=[{"role": "system", "content": "You're an policy expert that works for " + select + ". Your job is to paint a vivid picture of what will happen in a given scenario that you're given to inform policy makers, but in a concise way as you're aware that policy makers are busy. Describe how " + select + "will be affected by a bad 3-degree global warming scenario in a short sentence. Be concise, and use max 3 bullet points to describe your ideas. Highlight the important things in bold. Be specific when you can on the consequences to the economy. Conclude with one specific sentence about why it's worse than all other scenarios."}],
+                                                   messages=[{"role": "system", "content": "You're an policy expert that works for " + str(select) + ". Your job is to paint a vivid picture of what will happen in a given scenario that you're given to inform policy makers, but in a concise way as you're aware that policy makers are busy. Describe how " + str(select) + "will be affected by a bad 3-degree global warming scenario in a short sentence. Be concise, and use max 3 bullet points to describe your ideas. Highlight the important things in bold. Be specific when you can on the consequences to the economy. Conclude with one specific sentence about why it's worse than all other scenarios."}],
                                                    stream=True):
         st.session_state.full_response3 += response.choices[0].delta.content or ""
         message_placeholder3.markdown(st.session_state.full_response3 + "▌")
 
     message_placeholder3.markdown(st.session_state.full_response3)
 
-#    image3 = client.images.generate(
-#        model="dall-e-3",
-#        prompt="Create a photorealistic scene of a someone in a profession in" + select + "and how they would be affected by a catastrophic 4-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
-#        size="1024x1024",
-#        quality="standard",
-#        n=1,
-#    )
+    image3 = client.images.generate(
+        model="dall-e-3",
+        prompt="Create a photorealistic scene of a someone in a profession in" + str(select) + "and how they would be affected by a catastrophic 4-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
+        size="1024x1024",
+        quality="standard",
+        n=1,
+    )
 
-#    st.image(image3.data[0].url)
+    st.image(image3.data[0].url)
 
