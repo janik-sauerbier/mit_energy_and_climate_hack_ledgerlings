@@ -5,18 +5,22 @@ from pygwalker.api.streamlit import StreamlitRenderer, init_streamlit_comm
 import pandas as pd
 import numpy as np
 from openai import OpenAI
+from streamlit_gsheets import GSheetsConnection
 
-client = OpenAI()
-
-os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo-1106"
 
 st.set_page_config(
     page_title="🌎 Climate Ledger",
     layout="wide"
 )
+
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+client = OpenAI()
+
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-3.5-turbo-1106"
+
+df = pd.read_csv("./datasets/country_data.csv")
+df = df.apply(pd.to_numeric, errors='ignore')
 
 st.markdown("<h1 style='text-align: center;'>🌎 Climate Ledger</h1>", unsafe_allow_html=True)
 
@@ -125,6 +129,8 @@ with col3:
     """, height=500)
     st.markdown("<p style='text-align: center;'><b>Actual Climate Impact</b>*</p>", unsafe_allow_html=True)
 
+st.markdown("<p style='text-align: right;'>* A GREAT EXPLANATION</p>", unsafe_allow_html=True)
+
 st.markdown("<p style='text-align: center;'>👇<i> Scroll down here to continue </i>👇</p>", unsafe_allow_html=True)
 
 col1a, col2a, col3a = st.columns(3)
@@ -132,14 +138,30 @@ col1a, col2a, col3a = st.columns(3)
 select = st.empty
 
 with col2a:
-    select = st.selectbox("Country Selection", {"Germany", "USA", "Canada"}, placeholder="Choose an country")
+    select = st.selectbox("Country Selection", df.country.unique(), placeholder="Choose an country")
 
-chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
+st.divider()
 
-df = pd.read_csv(
-    "https://raw.githubusercontent.com/janik-sauerbier/mit_energy_and_climate_hack_ledgerlings/main/datasets/owid-co2-data.csv")
+col1d, col2d, col3d = st.columns(3)
 
-st.area_chart(chart_data)
+with col1d:
+    st.write("Emissions per Year")
+    chart_data = df.query("country == '" + str(select) + "'")[["year", "CO2 (mt)", "Methane (mt CO2e)", "Nitrous Oxide (mt CO2e)"]].apply(pd.to_numeric)
+    st.line_chart(chart_data, x="year")
+
+with col2d:
+    st.write("Cumulative Emissions until Year X")
+    chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["CO2", "Methane", "XX"])
+    st.area_chart(chart_data)
+
+with col3d:
+    st.write("Climate Debt")
+    chart_data = pd.DataFrame(np.random.randn(20, 1), columns=["lOLOLOLO"])
+    st.area_chart(chart_data)
+
+# df = pd.read_csv("https://raw.githubusercontent.com/janik-sauerbier/mit_energy_and_climate_hack_ledgerlings/main/datasets/owid-co2-data.csv")
+
+st.divider()
 
 col1b, col2b, col3b, col4b = st.columns(4)
 
@@ -153,21 +175,21 @@ with col2b:
     st.session_state.full_response = ""
 
     for response in client.chat.completions.create(model=st.session_state["openai_model"],
-                                                 messages=[{"role": "system", "content": "Describe vividly how " + select + " would specifically be affected by a 2-degree global warming scenario in two paragraphs (100 words) and highlight the most important aspects bold."}], stream=True):
+                                                 messages=[{"role": "system", "content": "Describe vividly how " + str(select) + " would specifically be affected by a 2-degree global warming scenario in two paragraphs (100 words) and highlight the most important aspects bold."}], stream=True):
         st.session_state.full_response += response.choices[0].delta.content or ""
         message_placeholder.markdown(st.session_state.full_response + "▌")
 
     message_placeholder.markdown(st.session_state.full_response)
 
-    image1 = client.images.generate(
-        model="dall-e-3",
-        prompt="Paint vividly how " + select + " would be affected by a 2-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
-        size="1024x1024",
-        quality="standard",
-        n=1,
-    )
+#    image1 = client.images.generate(
+#        model="dall-e-3",
+#        prompt="Paint vividly how " + select + " would be affected by a 2-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
+#        size="1024x1024",
+#        quality="standard",
+#        n=1,
+#    )
 
-    st.image(image1.data[0].url)
+#    st.image(image1.data[0].url)
 
 with col3b:
     st.write("### 🔴 3-degree scenario")
@@ -175,22 +197,22 @@ with col3b:
     st.session_state.full_response2 = ""
 
     for response in client.chat.completions.create(model=st.session_state["openai_model"],
-                                                   messages=[{"role": "system", "content": "Describe vividly how " + select + " would specifically be affected by a 3-degree global warming scenario in two paragraphs (100 words) and highlight the most important aspects bold."}],
+                                                   messages=[{"role": "system", "content": "Describe vividly how " + str(select) + " would specifically be affected by a 3-degree global warming scenario in two paragraphs (100 words) and highlight the most important aspects bold."}],
                                                    stream=True):
         st.session_state.full_response2 += response.choices[0].delta.content or ""
         message_placeholder2.markdown(st.session_state.full_response2 + "▌")
 
     message_placeholder2.markdown(st.session_state.full_response2)
 
-    image2 = client.images.generate(
-        model="dall-e-3",
-        prompt="Paint vividly how " + select + " would be affected by a bad 3-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
-        size="1024x1024",
-        quality="standard",
-        n=1,
-    )
+#    image2 = client.images.generate(
+#        model="dall-e-3",
+#        prompt="Paint vividly how " + select + " would be affected by a bad 3-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
+#        size="1024x1024",
+#        quality="standard",
+#        n=1,
+#    )
 
-    st.image(image2.data[0].url)
+#    st.image(image2.data[0].url)
 
 with col4b:
     st.write("### 🟣 4-degree scenario")
@@ -198,20 +220,20 @@ with col4b:
     st.session_state.full_response3 = ""
 
     for response in client.chat.completions.create(model=st.session_state["openai_model"],
-                                                   messages=[{"role": "system", "content": "Describe vividly how " + select + " would specifically be affected by a 4-degree global warming scenario in two paragraphs (100 words) and highlight the most important aspects bold."}],
+                                                   messages=[{"role": "system", "content": "Describe vividly how " + str(select) + " would specifically be affected by a 4-degree global warming scenario in two paragraphs (100 words) and highlight the most important aspects bold."}],
                                                    stream=True):
         st.session_state.full_response3 += response.choices[0].delta.content or ""
         message_placeholder3.markdown(st.session_state.full_response3 + "▌")
 
     message_placeholder3.markdown(st.session_state.full_response3)
 
-    image3 = client.images.generate(
-        model="dall-e-3",
-        prompt="Paint vividly " + select + " would be affected by a catastrophic 4-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
-        size="1024x1024",
-        quality="standard",
-        n=1,
-    )
+#    image3 = client.images.generate(
+#        model="dall-e-3",
+#        prompt="Paint vividly " + select + " would be affected by a catastrophic 4-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
+#        size="1024x1024",
+#        quality="standard",
+#        n=1,
+#    )
 
-    st.image(image3.data[0].url)
+#    st.image(image3.data[0].url)
 
