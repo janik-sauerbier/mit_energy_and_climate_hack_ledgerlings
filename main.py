@@ -144,18 +144,18 @@ col1d, col2d, col3d = st.columns(3)
 
 with col1d:
     st.write("Emissions per Year")
-    chart_data = df.query("country == '" + str(select) + "'")[["year", "CO2 (mt)", "Methane (mt CO2e)", "Nitrous Oxide (mt CO2e)"]].apply(pd.to_numeric)
+    chart_data = df.query("country == '" + str(select) + "'").query("year >= 1950")[["year", "CO2 (mt)", "Methane (mt CO2e)", "Nitrous Oxide (mt CO2e)"]].apply(pd.to_numeric)
     st.line_chart(chart_data, x="year")
 
 with col2d:
-    st.write("Cumulative Emissions until Year X")
-    chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["CO2", "Methane", "XX"])
-    st.area_chart(chart_data)
+    st.write("Cumulative CO2e (all gases) Emissions")
+    chart_data = df.query("country == '" + str(select) + "'").query("year >= 1950")[["year", "CO2e TOTAL Commulative"]].apply(pd.to_numeric)
+    st.area_chart(chart_data, x="year")
 
 with col3d:
     st.write("Climate Debt")
-    chart_data = pd.DataFrame(np.random.randn(20, 1), columns=["lOLOLOLO"])
-    st.area_chart(chart_data)
+    chart_data = df.query("country == '" + str(select) + "'").query("year >= 1950")[["year", "RF TOTAL Cummulative"]].apply(pd.to_numeric)
+    st.area_chart(chart_data, x="year")
 
 # df = pd.read_csv("https://raw.githubusercontent.com/janik-sauerbier/mit_energy_and_climate_hack_ledgerlings/main/datasets/owid-co2-data.csv")
 
@@ -180,15 +180,15 @@ with col2b:
 
     message_placeholder.markdown(st.session_state.full_response)
 
-    image1 = client.images.generate(
-        model="dall-e-3",
-        prompt="Create a photorealistic scene of a someone in a profession in" + str(select) + "and how they would be affected by a 2-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
-        size="1024x1024",
-        quality="standard",
-        n=1,
-    )
-
-    st.image(image1.data[0].url)
+#    image1 = client.images.generate(
+#        model="dall-e-3",
+#        prompt="Create a photorealistic scene of a someone in a profession in" + str(select) + "and how they would be affected by a 2-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
+#        size="1024x1024",
+#        quality="standard",
+#        n=1,
+#    )
+#
+#    st.image(image1.data[0].url)
 
 with col3b:
     st.write("### 🔴 3-degree scenario")
@@ -203,15 +203,15 @@ with col3b:
 
     message_placeholder2.markdown(st.session_state.full_response2)
 
-    image2 = client.images.generate(
-        model="dall-e-3",
-        prompt="Create a photorealistic scene of a someone in a profession in" + str(select) + "and how they would be affected by a bad 3-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
-        size="1024x1024",
-        quality="standard",
-        n=1,
-    )
-
-    st.image(image2.data[0].url)
+#    image2 = client.images.generate(
+#        model="dall-e-3",
+#        prompt="Create a photorealistic scene of a someone in a profession in" + str(select) + "and how they would be affected by a bad 3-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
+#        size="1024x1024",
+#        quality="standard",
+#        n=1,
+#    )
+#
+#    st.image(image2.data[0].url)
 
 with col4b:
     st.write("### 🟣 4-degree scenario")
@@ -226,13 +226,13 @@ with col4b:
 
     message_placeholder3.markdown(st.session_state.full_response3)
 
-    image3 = client.images.generate(
-        model="dall-e-3",
-        prompt="Create a photorealistic scene of a someone in a profession in" + str(select) + "and how they would be affected by a catastrophic 4-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
-        size="1024x1024",
-        quality="standard",
-        n=1,
-    )
-
-    st.image(image3.data[0].url)
+#    image3 = client.images.generate(
+#        model="dall-e-3",
+#        prompt="Create a photorealistic scene of a someone in a profession in" + str(select) + "and how they would be affected by a catastrophic 4-degree global warming scenario. \n\n DON'T WRITE ANY TEXT ON THE PICTURE.",
+#        size="1024x1024",
+#        quality="standard",
+#        n=1,
+#    )
+#
+#    st.image(image3.data[0].url)
 
