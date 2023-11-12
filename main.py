@@ -53,7 +53,7 @@ with col1:
 
           setTimeout(() => world1
             .polygonsTransitionDuration(2000)
-            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 5e-5))
+            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 3e-5))
           , 2000);
         });
       </script>
@@ -87,7 +87,7 @@ with col2:
 
           setTimeout(() => world2
             .polygonsTransitionDuration(2000)
-            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 5e-5))
+            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 3e-5))
           , 2000);
         });
       </script>
@@ -122,7 +122,7 @@ with col3:
 
           setTimeout(() => world3
             .polygonsTransitionDuration(2000)
-            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 5e-5))
+            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 3e-5))
           , 3000);
         });
       </script>
@@ -138,7 +138,7 @@ col1a, col2a, col3a = st.columns(3)
 select = st.empty
 
 with col2a:
-    select = st.selectbox("Country Selection", df.country.unique(), placeholder="Choose an country")
+    select = st.selectbox("Country Selection", df.country.unique(), index=1, placeholder="Choose an country")
 
 st.divider()
 
