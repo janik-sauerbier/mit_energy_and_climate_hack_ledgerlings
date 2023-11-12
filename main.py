@@ -1,11 +1,9 @@
 import os
 import streamlit as st
 import streamlit.components.v1 as components
-from pygwalker.api.streamlit import StreamlitRenderer, init_streamlit_comm
 import pandas as pd
 import numpy as np
 from openai import OpenAI
-from streamlit_gsheets import GSheetsConnection
 
 
 st.set_page_config(
