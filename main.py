@@ -53,12 +53,12 @@ with col1:
 
           setTimeout(() => world1
             .polygonsTransitionDuration(2000)
-            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 1e-4))
+            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 5e-5))
           , 2000);
         });
       </script>
     """, height=500)
-    st.markdown("<p style='text-align: center;'><b>2022 CO2e Emissions</b></p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center;'><b>2022 CO2e Emissions</b>*</p>", unsafe_allow_html=True)
 
 with col2:
     components.html("""
@@ -87,12 +87,12 @@ with col2:
 
           setTimeout(() => world2
             .polygonsTransitionDuration(2000)
-            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 1e-4))
+            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 5e-5))
           , 2000);
         });
       </script>
     """, height=500)
-    st.markdown("<p style='text-align: center;'><b>Cumulative CO2e Emissions</b></p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center;'><b>Cumulative CO2e Emissions</b>*</p>", unsafe_allow_html=True)
 
 
 with col3:
@@ -122,14 +122,14 @@ with col3:
 
           setTimeout(() => world3
             .polygonsTransitionDuration(2000)
-            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 1e-4))
+            .polygonAltitude(feat => Math.max(0.02, Math.sqrt(+feat.properties.POP_EST) * 5e-5))
           , 3000);
         });
       </script>
     """, height=500)
-    st.markdown("<p style='text-align: center;'><b>Actual Climate Impact</b>*</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center;'><b>Actual Climate Impact</b>* **</p>", unsafe_allow_html=True)
 
-st.markdown("<p style='text-align: center;'>* Greenhouse gases (GHGs) persist in the atmosphere for extended periods, significantly contributing to the warming of the Earth's surface. GHGs emitted centuries ago continue to play a role in our current global heating. Consequently, we face a finite carbon budget to achieve our objective of staying below a 1.5-degree increase. Cumulative Radiative Forcing stands as a widely employed measure to gauge the impact of past emissions—essentially quantifying the climate debt of various entities, be it nations, companies, or individuals. Assessing the accumulated climate debt of each entity redirects our focus from individual consumers to those accountable and capable of actively contributing to a solution</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center;'>*<b>Hint: Demo data! We are working on it. The data on the following pages is accurate.</b> **Greenhouse gases (GHGs) persist in the atmosphere for extended periods, significantly contributing to the warming of the Earth's surface. GHGs emitted centuries ago continue to play a role in our current global heating. Consequently, we face a finite carbon budget to achieve our objective of staying below a 1.5-degree increase. Cumulative Radiative Forcing stands as a widely employed measure to gauge the impact of past emissions—essentially quantifying the climate debt of various entities, be it nations, companies, or individuals. Assessing the accumulated climate debt of each entity redirects our focus from individual consumers to those accountable and capable of actively contributing to a solution</p>", unsafe_allow_html=True)
 
 st.markdown("<p style='text-align: center;'>👇<i> Scroll down here to continue </i>👇</p>", unsafe_allow_html=True)
 
